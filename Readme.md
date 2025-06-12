@@ -106,7 +106,7 @@ $FLINK_HOME/bin/start-cluster.sh
 $FLINK_HOME/bin/sql-client.sh
 ```
 
-#### 3.2 Create Tables and Test Data
+#### 3.2 Create Tables and Test Data via SQL
 
 ```sql
 -- Create Fluss catalog
@@ -148,11 +148,16 @@ INSERT INTO Fluss_A VALUES
   (2, 'Giannis', 52, 87.2),
   (3, 'Mehul', 60, 92.8);
 
+-- Switch to tableau mode for better formatting and column headers
+SET 'sql-client.execution.result-mode' = 'tableau';
+    
 -- Verify data
 SELECT * FROM Fluss_A;
 
+-- Check the table schema
+DESCRIBE Fluss_A;
 
---- For Upsert
+## For Upsert/PK Mode
 
 -- Create source PrimaryKey table Fluss_PK_A 
 CREATE TABLE Fluss_PK_A (
@@ -183,9 +188,19 @@ INSERT INTO Fluss_PK_A VALUES
                           (2, 'Giannis', 52, 87.2),
                           (3, 'Mehul', 60, 92.8);
 
+
+
+-- Update works in batch mode
+SET 'execution.runtime-mode' = 'batch';
+
+
 -- Update some records to generate changelogs
 UPDATE Fluss_PK_A SET score = 99.0 WHERE id = 1;
 UPDATE Fluss_PK_A SET age = 53 WHERE id = 2;
+
+-- To revert
+SET 'execution.runtime-mode' = 'streaming';
+
 
 ```
 
