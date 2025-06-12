@@ -18,6 +18,7 @@ public class FlussDataStreamPKApp {
         // Create streaming execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
+        // todo revesit again
 //        env.enableCheckpointing(5000);
 
         // Configure parallelism
