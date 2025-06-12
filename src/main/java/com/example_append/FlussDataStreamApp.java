@@ -15,7 +15,6 @@ public class FlussDataStreamApp {
         // Create streaming execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-        // Enable checkpointing for exactly-once semantics
 //        env.enableCheckpointing(5000);
 
         // Configure parallelism

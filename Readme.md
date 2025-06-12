@@ -159,7 +159,7 @@ SELECT * FROM Fluss_A;
 
 ```bash
 git clone <your-repo-url>
-cd flink-fluss-quickstart
+cd Flink-Fluss-Quickstart-Examples
 ```
 
 #### 4.2 Build the Project
@@ -193,6 +193,47 @@ src/
     └── java/
         └── com/example/
             └── FlussDataStreamAppTest.java     # Unit tests
+```
+
+## Monitoring and Management
+
+### Flink Web UI
+Access the Flink Web UI at http://localhost:8081 to:
+
+* Monitor running jobs and their status
+* View job execution graphs and metrics
+* Check checkpoint status and performance
+* Review task manager resources
+* Access job logs and exception details
+
+## Job Management Commands
+
+``` bash
+
+# Submit a job
+
+ $FLINK_HOME/bin/flink run \        
+    -c (classPath) \
+    (jarPath)
+
+# Example for submitting a job
+ $FLINK_HOME/bin/flink run \        
+    -c com.example.FlussDataStreamApp \
+    target/Flink-Fluss-Quickstart-1.0-SNAPSHOT.jar
+
+
+# List running jobs
+$FLINK_HOME/bin/flink list
+
+# Cancel a job (replace <job-id> with actual job ID)
+$FLINK_HOME/bin/flink cancel <job-id>
+
+# Stop a job with savepoint
+$FLINK_HOME/bin/flink stop <job-id>
+
+# Get job status
+$FLINK_HOME/bin/flink info <job-id>
+
 ```
 
 ## Key Features
