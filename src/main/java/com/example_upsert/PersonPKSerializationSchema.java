@@ -1,4 +1,4 @@
-package com.example_append;
+package com.example;
 
 import com.alibaba.fluss.flink.row.OperationType;
 import com.alibaba.fluss.flink.row.RowWithOp;
@@ -7,7 +7,7 @@ import com.alibaba.fluss.row.BinaryString;
 import com.alibaba.fluss.row.GenericRow;
 import com.common.Person;
 
-public class PersonSerializationSchema implements FlussSerializationSchema<Person> {
+public class PersonPKSerializationSchema implements FlussSerializationSchema<Person> {
 
     @Override
     public void open(InitializationContext context) throws Exception {
@@ -23,12 +23,13 @@ public class PersonSerializationSchema implements FlussSerializationSchema<Perso
         // Create a GenericRow with 5 fields (id, name, age, score, processed_time)
         GenericRow row = new GenericRow(5);
         row.setField(0, person.id);
+        // Convert String to BinaryString for Fluss
         row.setField(1, person.name != null ? BinaryString.fromString(person.name) : null);
         row.setField(2, person.age);
         row.setField(3, person.score);
         row.setField(4, person.processedTime);
 
-        // For log table, always use APPEND operation
-        return new RowWithOp(row, OperationType.APPEND);
+        // For PrimaryKey tables, use UPSERT operation (supports INSERT/UPDATE)
+        return new RowWithOp(row, OperationType.UPSERT);
     }
 }

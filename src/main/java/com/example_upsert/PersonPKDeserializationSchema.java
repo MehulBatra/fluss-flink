@@ -7,7 +7,7 @@ import com.alibaba.fluss.types.RowType;
 import com.common.Person;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 
-public class PersonDeserializationSchema implements FlussDeserializationSchema<Person> {
+public class PersonPKDeserializationSchema implements FlussDeserializationSchema<Person> {
 
     @Override
     public void open(InitializationContext context) throws Exception {

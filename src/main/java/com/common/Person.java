@@ -1,4 +1,4 @@
-package com.example_append;
+package com.common;
 
 import java.io.Serializable;
 import java.util.Objects;

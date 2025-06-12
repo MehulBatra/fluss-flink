@@ -121,13 +121,12 @@ USE CATALOG fluss_catalog;
 -- Verify catalog
 SHOW CURRENT CATALOG;
 
--- Create source table (Primary Key Table)
+-- Create source table (Log Table)
 CREATE TABLE Fluss_A (
   id BIGINT,
   name STRING,
   age INT,
   score DOUBLE,
-  PRIMARY KEY (id) NOT ENFORCED
 ) WITH (
   'bucket.num' = '4'
 );
@@ -151,6 +150,43 @@ INSERT INTO Fluss_A VALUES
 
 -- Verify data
 SELECT * FROM Fluss_A;
+
+
+--- For Upsert
+
+-- Create source PrimaryKey table Fluss_PK_A 
+CREATE TABLE Fluss_PK_A (
+                           id BIGINT,
+                           name STRING,
+                           age INT,
+                           score DOUBLE,
+                           PRIMARY KEY (id) NOT ENFORCED
+) WITH (
+     'bucket.num' = '4'
+     );
+
+-- Create sink PrimaryKey table Fluss_PK_B
+CREATE TABLE Fluss_PK_B (
+                           id BIGINT,
+                           name STRING,
+                           age INT,
+                           score DOUBLE,
+                           processed_time BIGINT,
+                           PRIMARY KEY (id) NOT ENFORCED
+) WITH (
+     'bucket.num' = '4'
+     );
+
+-- Insert test data with updates to test UPSERT behavior
+INSERT INTO Fluss_PK_A VALUES
+                          (1, 'Jark', 45, 95.5),
+                          (2, 'Giannis', 52, 87.2),
+                          (3, 'Mehul', 60, 92.8);
+
+-- Update some records to generate changelogs
+UPDATE Fluss_PK_A SET score = 99.0 WHERE id = 1;
+UPDATE Fluss_PK_A SET age = 53 WHERE id = 2;
+
 ```
 
 ### Step 4: Build and Run the DataStream Application
