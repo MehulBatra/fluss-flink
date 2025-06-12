@@ -1,0 +1,5 @@
+com/example/PersonDeserializationSchema.class
+com/example/Person.class
+com/example/PersonSerializationSchema.class
+com/example/FlussDataStreamApp$1.class
+com/example/FlussDataStreamApp.class
