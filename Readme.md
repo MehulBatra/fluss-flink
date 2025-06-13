@@ -10,12 +10,6 @@ This project shows how to:
 - Write processed results back to another Fluss table
 - Handle both primary key tables and log tables in Fluss
 
-## Architecture
-
-```
-Fluss_A (Source) → Flink DataStream Processing → Fluss_B (Sink)
-```
-
 ## Prerequisites
 
 - Java 11 or higher
