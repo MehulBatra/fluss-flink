@@ -28,7 +28,7 @@ public class FlussBuiltinSchemasTest {
         FlussSink<RowData> rowDataSink = FlussSink.<RowData>builder()
                 .setBootstrapServers("localhost:9123")
                 .setDatabase("fluss")
-                .setTable("Fluss_PK_B")
+                .setTable("Fluss_PK_C") // Create table in case it is missing in fluss
                 .setSerializationSchema(new RowDataSerializationSchema(false, false)) // upsert mode, don't ignore deletes
                 .build();
 
