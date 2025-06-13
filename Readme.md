@@ -239,24 +239,146 @@ mvn clean compile
 mvn exec:java -Dexec.mainClass="com.example.FlussDataStreamApp"
 ```
 
-## Project Structure
+# Fluss DataStream API - Job Types & Package Organization
+
+## 📁 Package Structure Overview
 
 ```
-src/
-├── main/
-│   ├── java/
-│   │   └── com/example/
-│   │       ├── FlussDataStreamApp.java          # Main application
-│   │       ├── Person.java                      # Data model
-│   │       ├── PersonDeserializationSchema.java # Source deserializer
-│   │       └── PersonSerializationSchema.java   # Sink serializer
-│   └── resources/
-│       └── log4j2.xml                          # Logging configuration
-└── test/
-    └── java/
-        └── com/example/
-            └── FlussDataStreamAppTest.java     # Unit tests
+src/main/java/com/
+├── 📦 common/                    # Shared components
+├── 📦 scanModes/                 # Offset initialization strategies  
+├── 📦 projection/                # Column pruning tests
+├── 📦 exampleAppend/             # Log table operations
+├── 📦 exampleUpsert/             # Primary key table operations
+├── 📦 exampleDelete/             # Deletion scenarios
+├── 📦 exampleRowData/            # Built-in schemas
+├── 📦 differentClientConfigs/    # Client configuration tests
+├── 📦 multiTable/                # Multi-source/sink processing
+├── 📦 recoveryModes/             # Fault tolerance & recovery
+└── 📦 errorHandling/             # Error handling & validation
 ```
+
+## 🎯 Job Types by Category
+
+### 1. 📖 Data Reading Strategies (`scanModes`)
+
+| Job Class | Purpose | Fluss API | Use Case |
+|-----------|---------|-----------|----------|
+| `FlussFullModeTest` | Read snapshot + changelogs | `OffsetsInitializer.full()` | Initial load + real-time |
+| `FlussLatestModeTest` | Read new changes only | `OffsetsInitializer.latest()` | Real-time processing |
+| `FlussEarliestModeTest` | Read all historical changes | `OffsetsInitializer.earliest()` | Data replay/recovery |
+
+**Example Output Differences:**
+- **Full Mode**: Shows all existing data first, then new changes
+- **Latest Mode**: Shows only changes after job starts
+- **Earliest Mode**: Shows historical changelog events in order
+- **Timestamp Mode**: Shows changes from specified timestamp
+
+### 2. 🎯 Data Processing Optimizations (`projection`)
+
+| Job Class | Purpose | Fluss API | Benefit |
+|-----------|---------|-----------|---------|
+| `FlussProjectedFieldsTest` | Column pruning | `setProjectedFields()` | Reduced I/O, memory usage |
+
+**Key Feature**: Only reads specified columns, others appear as `null`
+
+### 3. 📝 Write Operations by Table Type
+
+#### Log Tables (`exampleAppend`)
+| Job Class | Operation | Table Type | Use Case |
+|-----------|-----------|------------|----------|
+| `FlussDataStreamApp` | APPEND | Log Table | Event logging, metrics |
+
+#### Primary Key Tables (`exampleUpsert`)
+| Job Class | Operation | Table Type | Use Case |
+|-----------|-----------|------------|----------|
+| `FlussDataStreamPKApp` | UPSERT | PK Table | Business entities, dimensions |
+
+#### Delete Operations (`exampleDelete`)
+| Job Class | Operation | Scenario | Real-World Example |
+|-----------|-----------|----------|-------------------|
+| `FlussDeleteTest` | DELETE | General deletion | Data cleanup |
+
+### 4. ⚙️ Configuration & Performance (`differentClientConfigs`)
+
+| Job Class | Configuration Area | Options Tested |
+|-----------|-------------------|----------------|
+| `FlussCustomOptionsTest` | Writer optimization | `batch-size`, `batch-timeout`, `buffer.memory-size` |
+| `FlussShuffleControlTest` | Data distribution | `setShuffleByBucketId()` |
+
+### 5. 🏗️ Advanced Patterns
+
+#### Built-in Schemas (`exampleRowData`)
+| Job Class | Schema Type | Benefit |
+|-----------|-------------|---------|
+| `FlussBuiltinSchemasTest` | RowData native schemas | Better performance |
+
+#### Multi-Table Processing (`multiTable`)
+| Job Class | Pattern | Use Case |
+|-----------|---------|----------|
+| `FlussMultiTableTest` | Union → Route → Multiple sinks | Complex data pipelines |
+
+#### Fault Tolerance (`recoveryModes`)
+| Job Class | Focus Area | Testing Aspect |
+|-----------|------------|----------------|
+| `FlussCheckpointRecoveryTest` | State management | Exactly-once processing |
+
+
+## 🚀 Execution Workflow
+
+### 1. Basic Testing Flow
+```mermaid
+graph LR
+    A[Setup Tables] --> B[Run Scan Mode Tests]
+    B --> C[Test Write Operations]
+    C --> D[Verify Results]
+```
+
+### 2. Advanced Testing Flow
+```mermaid
+graph TD
+    A[Basic Tests] --> B[Configuration Tests]
+    B --> C[Error Handling Tests]
+    C --> D[Performance Tests]
+    D --> E[Recovery Tests]
+```
+
+## 📊 Test Matrix
+
+| Feature | Log Table | PK Table | Status |
+|---------|-----------|----------|--------|
+| Append Operations | ✅ | ❌ | Complete |
+| Upsert Operations | ❌ | ✅ | Complete |
+| Delete Operations | ❌ | ✅ | Complete |
+| Full Mode Reading | ✅ | ✅ | Complete |
+| Latest Mode Reading | ✅ | ✅ | Complete |
+| Projection | ✅ | ✅ | Complete |
+| Custom Configs | ✅ | ✅ | Complete |
+| Error Handling | ✅ | ✅ | Complete |
+
+
+
+## 🔧 Customization Guide
+
+### Adding New Job Types
+
+1. **Create package** for new functionality area
+2. **Follow naming convention**: `Fluss[Feature]Test`
+3. **Include comprehensive logging** for verification
+4. **Add error handling** for production readiness
+5. **Update documentation** with new examples
+
+### Package Naming Convention
+
+```
+com.[functionality]/
+├── Fluss[Feature]Test.java           # Main test class
+├── [Feature]SerializationSchema.java # Custom serializer if needed
+├── [Feature]DeserializationSchema.java # Custom deserializer if needed
+└── [Feature]Helper.java              # Utility classes if needed
+```
+
+This organization provides clear separation of concerns and makes it easy to find and run specific types of tests for different Fluss DataStream API features.
 
 ## Monitoring and Management
 
@@ -317,17 +439,6 @@ $FLINK_HOME/bin/flink info <job-id>
 - **Offset Strategy**: Reads from earliest available data
 - **Watermark Strategy**: No watermarks (for simplicity)
 
-## Dependencies
-
-Key dependencies include:
-
-- Apache Flink 1.18.1 (Streaming, Clients, Table API, Connector Base)
-- Alibaba Fluss Connector 0.7-SNAPSHOT
-- SLF4J and Log4j2 for logging
-
-See `pom.xml` for complete dependency list.
-
-## Troubleshooting
 
 ### Common Issues
 
