@@ -1,11 +1,10 @@
-package com.example_upsert;
+package com.exampleUpsert;
 
 import com.alibaba.fluss.flink.sink.FlussSink;
 import com.alibaba.fluss.flink.source.FlussSource;
 import com.alibaba.fluss.flink.source.enumerator.initializer.OffsetsInitializer;
 import com.common.Person;
 
-import com.example_append.PersonPKDeserializationSchema;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;

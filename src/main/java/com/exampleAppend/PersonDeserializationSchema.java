@@ -1,4 +1,4 @@
-package com.example_append;
+package com.exampleAppend;
 
 import com.alibaba.fluss.flink.source.deserializer.FlussDeserializationSchema;
 import com.alibaba.fluss.record.LogRecord;
@@ -7,7 +7,7 @@ import com.alibaba.fluss.types.RowType;
 import com.common.Person;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 
-public class PersonPKDeserializationSchema implements FlussDeserializationSchema<Person> {
+public class PersonDeserializationSchema implements FlussDeserializationSchema<Person> {
 
     @Override
     public void open(InitializationContext context) throws Exception {

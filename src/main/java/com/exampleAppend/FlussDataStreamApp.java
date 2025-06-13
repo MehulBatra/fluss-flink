@@ -1,4 +1,4 @@
-package com.example_append;
+package com.exampleAppend;
 
 import com.alibaba.fluss.flink.sink.FlussSink;
 import com.alibaba.fluss.flink.source.FlussSource;

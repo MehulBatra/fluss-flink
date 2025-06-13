@@ -182,6 +182,18 @@ CREATE TABLE Fluss_PK_B (
      'bucket.num' = '4'
      );
 
+-- For Multi table union stream sink
+CREATE TABLE Fluss_PK_Target (
+                                id BIGINT,
+                                name STRING,
+                                age INT,
+                                score DOUBLE,
+                                processed_time BIGINT,
+                                PRIMARY KEY (id) NOT ENFORCED
+) WITH (
+     'bucket.num' = '4'
+     );
+
 -- Insert test data with updates to test UPSERT behavior
 INSERT INTO Fluss_PK_A VALUES
                           (1, 'Jark', 45, 95.5),

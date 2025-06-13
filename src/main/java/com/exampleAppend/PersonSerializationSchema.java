@@ -1,4 +1,4 @@
-package com.example_append;
+package com.exampleAppend;
 
 import com.alibaba.fluss.flink.row.OperationType;
 import com.alibaba.fluss.flink.row.RowWithOp;
