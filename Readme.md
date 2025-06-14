@@ -1,4 +1,4 @@
-# fluss-rust: Rust Client for Fluss
+# flink-fluss-quickstart: Go to guide for flink interaction with fluss
 
 ![Experimental](https://img.shields.io/badge/status-experimental-orange)
 
