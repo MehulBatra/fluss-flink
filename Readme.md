@@ -1,15 +1,20 @@
+# fluss-rust: Rust Client for Fluss
 
-Why Fluss?
-Fluss is a streaming storage built for real-time analytics which can serve as the real-time data layer for Lakehouse architectures. It bridges the gap between streaming data and the data Lakehouse by enabling low-latency, high-throughput data ingestion and processing while seamlessly integrating with popular compute engines.
+![Experimental](https://img.shields.io/badge/status-experimental-orange)
 
-# Flink-Fluss DataStream Quickstart
+## Why Fluss?
+[Fluss](https://alibaba.github.io/fluss-docs/docs/intro/) is a streaming storage built for real-time analytics which can serve as the real-time data layer for Lakehouse architectures.
+It bridges the gap between streaming data and the data Lakehouse by enabling low-latency, high-throughput data ingestion and processing while seamlessly integrating with popular compute engines.
 
-A sample Apache Flink DataStream/SQL application that demonstrates real-time data processing using [Alibaba Fluss](https://github.com/alibaba/fluss) as both source and sink.
+## Why Flink-Fluss Quickstart
+It's an unofficial experimental sample Apache Flink DataStream/SQL application that demonstrates real-time data processing using [Alibaba Fluss](https://github.com/alibaba/fluss) as both source and sink. Enabling developers to explore Fluss within Flink ecosystems.
+# 
+
 
 ## Overview
 
 This project shows how to:
-- Read data from a Fluss table using DataStream API
+- Read data from a Fluss table using DataStream/SQL API
 - Process data in real-time with transformations
 - Write processed results back to another Fluss table
 - Handle both primary key tables and log tables in Fluss
@@ -18,7 +23,7 @@ This project shows how to:
 
 - Java 11 or higher
 - Maven 3.6+
-- Apache Flink 1.18+ (for DataStream API compatibility)
+- Apache Flink 1.18+ (for DataStream/SQL API compatibility)
 - Git
 
 ## Setup Instructions
