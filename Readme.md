@@ -3,11 +3,11 @@
 ![Experimental](https://img.shields.io/badge/status-experimental-orange)
 
 ## Why Fluss?
-[Fluss](https://alibaba.github.io/fluss-docs/docs/intro/) is a streaming storage built for real-time analytics which can serve as the real-time data layer for Lakehouse architectures.
+[Fluss](https://apache.github.io/fluss-docs/docs/intro/) is a streaming storage built for real-time analytics which can serve as the real-time data layer for Lakehouse architectures.
 It bridges the gap between streaming data and the data Lakehouse by enabling low-latency, high-throughput data ingestion and processing while seamlessly integrating with popular compute engines.
 
 ## Why Flink-Fluss Quickstart
-It's an unofficial experimental sample Apache Flink DataStream/SQL application that demonstrates real-time data processing using [Alibaba Fluss](https://github.com/alibaba/fluss) as both source and sink. Enabling developers to explore Fluss within Flink ecosystems.
+It's an unofficial experimental sample Apache Flink DataStream/SQL application that demonstrates real-time data processing using [Apache Fluss](https://github.com/Apache/fluss) as both source and sink. Enabling developers to explore Fluss within Flink ecosystems.
 # 
 
 
