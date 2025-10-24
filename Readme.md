@@ -1,4 +1,4 @@
-# fluss-flink-quickstart: Go to guide to inetract with fluss via flink engine
+# fluss-flink: Go to guide to inetract with fluss via flink engine
 
 ![Experimental](https://img.shields.io/badge/status-experimental-orange)
 
